@@ -10,13 +10,9 @@
                 <div class="card-body">
                   <a href="{{ route('role.create') }}"  class="btn btn-primary float-right">Crear Nuevo Rol</a>
                   <br><br>
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
 
-                   
+                  @include('custom.message')
+                  
                     <table class="table table-hover">
                         <thead>
                           <tr>
@@ -29,8 +25,9 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
+                          
                             @foreach ($roles as $role)
+                            <tr>
                                 <th scope="row">{{$role->id}}</th>
                                 <td>{{$role->name }}</td>
                                 <td>{{$role->slug }}</td>
@@ -40,10 +37,10 @@
                                 <td> <a class="btn btn-success" href="{{ route('role.edit', $role->id) }}">Editar </a> </td>
                                 <td> <a class="btn btn-danger" href="{{ route('role.show', $role->id) }}">Eliminar </a> </td>
                                 
-                                
+                            </tr>    
                             @endforeach
                             
-                          </tr>
+                          
                         
                         </tbody>
                       </table>
