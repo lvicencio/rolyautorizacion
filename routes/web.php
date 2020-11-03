@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\User;
 use App\Permission\Models\Role;
 use App\Permission\Models\Permission;
+use Illuminate\Support\Facades\Gate;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,3 +71,24 @@ Route::get('/test', function () {
 });
 
 */
+
+Route::get('/pruebas', function () {
+    
+    $user = User::find(2);
+
+    $user->roles()->sync([2]);
+    return $user->roles;
+    //return User::get();
+});
+
+Route::get('/test', function () {
+    
+    $user = User::find(2);
+
+    Gate::authorize('haveaccess', 'role.index');
+    //$user->roles()->sync([2]);
+    //return $user->roles;
+    //return $user->havePermission('role.show');
+
+    return $user;
+});
