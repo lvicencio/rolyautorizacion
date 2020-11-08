@@ -78,9 +78,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:30|unique:users,name,'.$user->id,
+            'email' => 'required|max:30|unique:users,email,'.$user->id
+
+        ]);
+
+     
+        $user->update($request->all());
+
+        $user->roles()->sync($request->get('roles'));
+        
+   
+        return redirect()->route('user.index')->with('status_success','Usuario editado con éxito');
+     
+
     }
 
     /**
@@ -89,8 +103,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect()->route('user.index')->with('status_success','Usuario Eliminado con éxito');
+    
     }
 }
