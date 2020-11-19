@@ -170,5 +170,23 @@ class InfoPermissionInfoSeeder extends Seeder
     //$roladmin->permissions()->sync($permission_all);
 
 
+    $permission = Permission::create([
+        'name' => 'Show mi User',
+        'slug' => 'usermy.show',
+        'description' => 'Puede ver su Usuario'
+    ]);
+
+    $permission_all[] = $permission->id;
+
+
+     $permission = Permission::create([
+        'name' => 'Edit mi user',
+        'slug' => 'usermy.edit',
+        'description' => 'Uuede editar su Usuario'
+    ]);
+
+    $permission_all[] = $permission->id;
+
+    
     }
 }

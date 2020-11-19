@@ -8,9 +8,11 @@
                 <div class="card-header">Roles</div>
 
                 <div class="card-body">
-                  <a href="{{ route('role.create') }}"  class="btn btn-primary float-right">Crear Nuevo Rol</a>
+                  @can('haveaccess', 'role.create')
+                      <a href="{{ route('role.create') }}"  class="btn btn-primary float-right">Crear Nuevo Rol</a>
+                 
                   <br><br>
-
+                  @endcan
                   @include('custom.message')
                   
                     <table class="table table-hover">
@@ -33,16 +35,28 @@
                                 <td>{{$role->slug }}</td>
                                 <td>{{$role->description }}</td>
                                 <td>{{$role['full-access'] }}</td>
-                                <td> <a class="btn btn-info" href="{{ route('role.show', $role->id) }}">Ver </a> </td>
-                                <td> <a class="btn btn-success" href="{{ route('role.edit', $role->id) }}">Editar </a> </td>
                                 <td> 
+
+                                @can('haveaccess', 'role.show')
+                                  <a class="btn btn-info" href="{{ route('role.show', $role->id) }}">Ver </a>
+                                @endcan
+                                </td>
+
+                                <td>
+                                @can('haveaccess', 'role.edit')
+                                  <a class="btn btn-success" href="{{ route('role.edit', $role->id) }}">Editar </a> 
+                                @endcan
+                                </td>
+
+                                <td> 
+                                @can('haveaccess', 'role.destroy')
                                 <form action="{{ route('role.destroy', $role->id) }}" method="post">
                                   @csrf
                                   @method('DELETE')
                                   <button class="btn btn-danger">
                                     Eliminar</button>
                                 </form>  
-                                  
+                                @endcan 
                                   
                                 
                                 </td>

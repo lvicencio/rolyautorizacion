@@ -16,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('haveaccess','user.index');
         $users = User::with('roles')->orderBy('id','Desc')->paginate(3);
 
         return view('user.index', compact('users'));
@@ -28,7 +29,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        
+        return 'CrEaTe';
     }
 
     /**
@@ -50,7 +52,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-               
+        //politicy
+        $this->authorize('view', [$user, ['user.show', 'usermy.show'] ]);
+        
+        //gate
         $roles = Role::orderBy('name')->get();
         
         return view('user.show', compact('roles','user'));
@@ -64,7 +69,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-               
+        
+        //politicy
+        $this->authorize('update', [$user, ['user.edit', 'usermy.edit'] ]);
+
         $roles = Role::orderBy('name')->get();
         
         return view('user.edit', compact('roles','user'));
@@ -105,6 +113,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        $this->authorize('haveaccess', 'user.destroy');
         $user->delete();
 
         return redirect()->route('user.index')->with('status_success','Usuario Eliminado con éxito');

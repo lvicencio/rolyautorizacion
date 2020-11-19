@@ -39,9 +39,18 @@
                                 
                                 </td>
                                 
-                                <td> <a class="btn btn-info" href="{{ route('user.show', $user->id) }}">Ver </a> </td>
-                                <td> <a class="btn btn-success" href="{{ route('user.edit', $user->id) }}">Editar </a> </td>
                                 <td> 
+                                  @can('view', [$user, ['user.show','usermy.show']])
+                                  <a class="btn btn-info" href="{{ route('user.show', $user->id) }}">Ver </a> 
+                                 @endcan
+                                </td>
+                                <td> 
+                                  @can('view', [$user, ['user.edit','usermy.edit']])
+                                  <a class="btn btn-success" href="{{ route('user.edit', $user->id) }}">Editar </a> 
+                                  @endcan
+                                </td>
+                                <td> 
+                                  @can('haveaccess', 'user.destroy')
                                 <form action="{{ route('user.destroy', $user->id) }}" method="post">
                                   @csrf
                                   @method('DELETE')
@@ -49,7 +58,7 @@
                                     Eliminar</button>
                                 </form>  
                                   
-                                  
+                                @endcan
                                 
                                 </td>
                                 
